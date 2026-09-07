@@ -109,10 +109,10 @@ public class MainActivity extends Activity {
         Bitmap bitmap = null;
         try {
             if (!drawingsDir().isDirectory() && !drawingsDir().mkdirs()) throw new IOException();
-            bitmap = Bitmap.createBitmap(1024,1024,Bitmap.Config.ARGB_8888);
+            bitmap = Bitmap.createBitmap(Math.max(1,drawing.getWidth()),Math.max(1,drawing.getHeight()),Bitmap.Config.ARGB_8888);
             Canvas canvas = new Canvas(bitmap);
             canvas.drawColor(Color.WHITE);
-            drawing.paintStrokes(canvas,1024,1024); // Never export guide lines.
+            drawing.paintStrokes(canvas,bitmap.getWidth(),bitmap.getHeight()); // Never export guide lines.
             try (FileOutputStream out = new FileOutputStream(file)) {
                 if (!bitmap.compress(Bitmap.CompressFormat.PNG,100,out)) throw new IOException();
             }
